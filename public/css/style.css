@@ -1,0 +1,157 @@
+body {
+    font-family: "Plus Jakarta Sans", sans-serif !important;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f8f9fa; 
+}
+
+.container {
+    flex: 1;
+}
+
+/* Navbar */
+.navbar {
+    height: 5rem;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.fa-compass {
+    color: #fe424d;
+    font-size: 2.5rem; 
+}
+
+.nav-link {
+    color: #222222 !important;
+    font-weight: 500; 
+    transition: color 0.3s; 
+}
+
+.nav-link:hover {
+    color: #fe424d !important;
+}
+
+/* Footer */
+.f-info {
+    text-align: center;
+    height: auto; 
+    padding: 2rem 0; 
+    background-color: #ebebeb;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; 
+}
+
+.f-info-links a {
+    text-decoration: none;
+    color: #222222;
+    margin: 0 1rem; 
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+.f-info-socials i {
+    font-size: 1.5rem; 
+    margin: 0 1rem; 
+    color: #222222;
+    transition: color 0.3s;
+}
+
+.f-info-socials i:hover {
+    color: #fe424d; 
+}
+
+.f-info-brand {
+    width: 100%;
+    margin-top: 1rem;
+    font-weight: 500;
+}
+
+/* Cards */
+.card {
+    border: none !important;
+    margin-bottom: 2.5rem; 
+    border-radius: 1rem !important;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); 
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); 
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
+}
+
+.card-img-top {
+    border-radius: 1rem 1rem 0 0 !important; 
+    width: 100% !important;
+    object-fit: cover !important;
+}
+
+.card-body { 
+    padding: 1.25rem !important; 
+}
+
+.card-text b {
+    font-weight: 600 !important;
+}
+
+.listing-link {
+    text-decoration: none !important;
+    color: inherit; 
+}
+
+
+.card-img-overlay {
+    display: none;
+}
+
+
+/* New/Edit Page Form */
+.needs-validation{
+    margin-top: 1.5rem;
+}
+
+.form-label{
+    font-weight: 500;
+}
+
+/* Buttons */
+.btn-dark {
+    background-color: #fe424d !important;
+    border: none !important;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-dark:hover {
+    background-color: #d32f2f !important;
+    transform: scale(1.05);
+}
+
+.add-btn, .edit-btn, .del-btn {
+    width: 100%;
+}
+
+
+/* Show Page */
+.show-img {
+    height: auto; 
+    max-height: 60vh;
+    object-fit: cover;
+    border-radius: 1rem; 
+}
+
+.show-card {
+    border: none;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    padding: 2rem;
+    border-radius: 1rem;
+}
+
+.btns {
+    display: flex;
+    gap: 1rem; 
+}
