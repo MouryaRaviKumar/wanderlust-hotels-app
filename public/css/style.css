@@ -72,7 +72,7 @@ body {
 }
 
 /* Cards */
-.card {
+.listing-card {
     border: none !important;
     margin-bottom: 2.5rem; 
     border-radius: 1rem !important;
@@ -80,22 +80,22 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.card:hover {
+.listing-card:hover {
     transform: translateY(-5px); 
     box-shadow: 0 8px 16px rgba(0,0,0,0.2); 
 }
 
-.card-img-top {
+.listing-card-img-top {
     border-radius: 1rem 1rem 0 0 !important; 
     width: 100% !important;
     object-fit: cover !important;
 }
 
-.card-body { 
+.listing-card-body { 
     padding: 1.25rem !important; 
 }
 
-.card-text b {
+.listing-card-text b {
     font-weight: 600 !important;
 }
 
@@ -105,7 +105,7 @@ body {
 }
 
 
-.card-img-overlay {
+.listing-card-img-overlay {
     display: none;
 }
 
@@ -154,4 +154,28 @@ body {
 .btns {
     display: flex;
     gap: 1rem; 
+}
+
+/* Review Cards */
+.review-card {
+    border: 1px solid #ddd;
+    margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    padding: 1rem;
+}
+
+.review-card .card-body {
+    padding: 0.5rem;
+}
+
+.review-card .card-title {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.review-card .card-text {
+    color: #555;
+    font-size: 0.95rem;
+    line-height: 1.6;
 }

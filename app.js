@@ -7,7 +7,8 @@ const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
 const wrapAsync = require('./utils/wrapAsync');
 const ExpressError = require('./utils/ExpressError');
-const {listingSchema} = require("./schema.js");
+const {listingSchema , reviewSchema} = require("./schema.js");
+const Review = require("./models/review.js");
 
 // View engine & middleware
 app.set("view engine", 'ejs');
@@ -27,11 +28,14 @@ main()
 
 // Root route
 app.get("/", (req, res) => {
-    res.send("Hi I am root");
+    res.redirect("/listings");
 });
 
 //Function to perform Schema Validation
 const validateListing = (req,res,next)=>{
+    if (!req.body.listing) {
+    throw new ExpressError(400, "Invalid listing data");
+    }
     const { error } = listingSchema.validate(req.body);
     if (error) {
         const msg = error.details.map(el => el.message).join(",");
@@ -39,7 +43,18 @@ const validateListing = (req,res,next)=>{
     }else{
         next();
     }
-}
+};
+
+//Function to validate Review
+const validateReview = (req,res,next)=>{
+    const { error } = reviewSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(",");
+        throw new ExpressError(400, msg);
+    }else{
+        next();
+    }
+};
 
 // Index Route
 app.get("/listings", wrapAsync(async (req, res) => {
@@ -59,6 +74,15 @@ app.post("/listings",validateListing, wrapAsync(async (req, res, next) => {
     res.redirect("/listings");
 }));
 
+// Show Route
+app.get("/listings/:id", wrapAsync(async (req, res, next) => {
+    let { id } = req.params;
+    const listing = await Listing.findById(id).populate("reviews");
+    if (!listing) {
+        return next(new ExpressError(404, "Listing you requested does not exist!"));
+    }
+    res.render("listings/show.ejs", { listing });
+}));
 
 // Edit Route
 app.get("/listings/:id/edit", wrapAsync(async (req, res, next) => {
@@ -84,14 +108,26 @@ app.delete("/listings/:id", wrapAsync(async (req, res) => {
     res.redirect("/listings");
 }));
 
-// Show Route
-app.get("/listings/:id", wrapAsync(async (req, res, next) => {
+//Review Route
+app.post("/listings/:id/reviews", validateReview, wrapAsync(async (req,res)=>{
     let { id } = req.params;
-    const listing = await Listing.findById(id);
-    if (!listing) {
-        return next(new ExpressError(404, "Listing you requested does not exist!"));
-    }
-    res.render("listings/show.ejs", { listing });
+    let listing = await Listing.findById(id);
+    let newReview = new Review(req.body.review);
+
+    listing.reviews.push(newReview);
+
+    await newReview.save();
+    await listing.save();
+    res.redirect(`/listings/${id}`);
+}));
+
+//Delete review route
+app.delete("/listings/:id/reviews/:reviewId",wrapAsync(async(req,res)=>{
+    let {id , reviewId} = req.params;
+
+    await Listing.findByIdAndUpdate(id,{$pull : {reviews : reviewId}});
+    await Review.findByIdAndDelete(reviewId);
+    res.redirect(`/listings/${id}`);
 }));
 
 // 404 Handler
