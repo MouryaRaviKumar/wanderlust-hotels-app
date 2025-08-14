@@ -2,8 +2,6 @@
 A full-stack vacation rental web application built with **Node.js**, **Express**, and **MongoDB**, inspired by platforms like Airbnb.  
 Users can browse, review, and share unique places to stay.
 
-![Wanderlust Banner](https://via.placeholder.com/1000x300?text=Wanderlust+Booking+App) <!-- Replace with your screenshot/banner -->
-
 ---
 
 ## 📌 Table of Contents
@@ -11,7 +9,6 @@ Users can browse, review, and share unique places to stay.
 - [✨ Features](#-features)
 - [🛠 Tech Stack](#-tech-stack)
 - [🚀 Getting Started](#-getting-started)
-- [📸 Screenshots](#-screenshots)
 - [📂 Project Structure](#-project-structure)
 - [📌 Project Status](#-project-status)
 - [📬 Contact](#-contact)
