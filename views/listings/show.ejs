@@ -1,4 +1,9 @@
 <% layout("/layouts/boilerplate") %>
+<script>
+    const mapToken = "<%= process.env.MAP_TOKEN %>";
+    const coordinates = <%= JSON.stringify(listing.geometry?.coordinates || [78.2869, 14.8140]) %>;
+    console.log( coordinates);
+</script>
 <div class="row mt-3">
     <%- include("../includes/flash.ejs") %>
     <div class="col-8 offset-3">
@@ -67,25 +72,40 @@
     </form>
     <hr>
 <% } %>
-
-<div class="row">
+<% if (listing.reviews.length > 0) { %>
+  <div class="row">
     <b><p>All Reviews:</p></b>
-    <% for(review of listing.reviews) { %>
-        <div class="col-md-5 mb-3">
-            <div class="card review-card">
-                <div class="card-body">
-                    <h5 class="card-title">@<%= review.author?.username || "Unknown" %></h5>
-                    <p class="starability-result" data-rating="<%= review.rating %>"></p>
-                    <p class="card-text"><%= review.comment %></p>
-                </div>
-                <% if(currUser && review.author && review.author._id.equals(currUser._id)) { %>
-                    <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
-                        <button class="btn btn-sm btn-dark">Delete</button>
-                    </form>
-                <% } %>
-            </div>
+    <% for (review of listing.reviews) { %>
+      <div class="col-md-5 mb-3">
+        <div class="card review-card">
+          <div class="card-body">
+            <h5 class="card-title">@<%= review.author?.username || "Unknown" %></h5>
+            <p class="starability-result" data-rating="<%= review.rating %>"></p>
+            <p class="card-text"><%= review.comment %></p>
+          </div>
+          <% if (currUser && review.author && review.author._id.equals(currUser._id)) { %>
+            <form class="mb-3" method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+              <button class="btn btn-sm btn-dark">Delete</button>
+            </form>
+          <% } %>
         </div>
+      </div>
     <% } %>
+  </div>
+<% } else { %>
+  <p class="text-muted"><i>No reviews yet. Be the first to leave one!</i></p>
+<% } %>
+
+<div class="col-8 offset-2 mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="mb-3">Where you'll be</h3>
+      <div id="map"></div>
+    </div>
+  </div>
 </div>
-</div>
+<script src="/js/map.js"></script>
+
 <br><br>
+
+
