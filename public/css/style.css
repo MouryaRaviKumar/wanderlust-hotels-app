@@ -20,7 +20,7 @@ body {
 .container {
     flex: 1;
     width: 100%;
-    padding: 0; /* Remove default padding to allow main-content to control it */
+    padding: 0; /* Remove default padding */
 }
 
 /* NEW FOCUSED LAYOUT */
@@ -34,6 +34,38 @@ body {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
 }
+
+/* NEW FILTER BAR STYLES */
+.filters {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    padding: 1rem 0;
+}
+
+.filter {
+    text-align: center;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: all 0.2s ease-in-out;
+}
+
+.filter:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.filter i {
+    font-size: 1.5rem;
+}
+
+.filter p {
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+}
+
 
 /* Navbar */
 .navbar {
@@ -98,11 +130,11 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--text-secondary);
 }
 
-/* CARD DESIGN - FIX APPLIED HERE */
+/* CARD DESIGN WITH ON-SCROLL ANIMATION */
 .listing-link {
     text-decoration: none;
-    display: block;      /* ADDED: Makes the link a block element */
-    height: 100%;        /* ADDED: Ensures the link fills the column height */
+    display: block;
+    height: 100%;
 }
 
 .listing-card {
@@ -110,13 +142,23 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 12px;
     overflow: hidden;
     background-color: var(--bg-color);
-    transition: all 0.3s ease;
-    height: 100%;        /* ADDED: The key fix to make the card fill its container */
+    height: 100%;
+    /* Animation initial state */
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out, box-shadow 0.3s ease;
 }
+
+/* Animation final state */
+.listing-card.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 
 .listing-card:hover {
     box-shadow: 0 8px 30px rgba(0,0,0,0.12);
-    transform: translateY(-5px);
+    transform: translateY(-5px) !important; /* Use important to override the reveal animation transform */
 }
 
 .listing-card-img-top {
@@ -169,7 +211,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-dark:hover {
-    background-color: #005f5f !important; /* A darker shade of teal for hover */
+    background-color: #005f5f !important; /* A darker shade for hover */
     transform: scale(1.03);
 }
 
@@ -189,6 +231,15 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     gap: 1rem; 
 }
+
+/* UPDATED STYLE FOR EDIT PAGE IMAGE PREVIEW */
+.edit-preview-img {
+    width: 50%;
+    aspect-ratio: 16 / 9;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
 
 /* Review Cards */
 .review-card {
