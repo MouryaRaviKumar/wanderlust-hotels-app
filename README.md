@@ -1,10 +1,19 @@
-# Wanderlust - A Full-Stack Hotels listing Platform
+# Wanderlust - A Full-Stack Vacation Rental Platform
 
 Wanderlust is a full-stack web application that allows users to browse, list, and review vacation rental properties. Built with a robust MVC (Model-View-Controller) architecture, it ensures a clean separation of concerns and scalable code.
 
 **Live Demo**: [https://wanderlust-hotels-app.onrender.com](https://wanderlust-hotels-app.onrender.com)
 
 **GitHub Repository**: [https://github.com/MouryaRaviKumar/wanderlust-hotels-app](https://github.com/MouryaRaviKumar/wanderlust-hotels-app)
+
+---
+
+## Collaborators
+
+This project was a collaborative effort. Special thanks to:
+
+* **Hemanth Jangam** - [GitHub Profile](https://github.com/hemanthjangam)
+    * Hemanth played a crucial role by handling the frontend development and the complete testing process for the application. He was a great support throughout the project.
 
 ---
 
