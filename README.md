@@ -1,4 +1,4 @@
-# Wanderlust - A Full-Stack Vacation Rental Platform
+# Wanderlust - A Full-Stack Accommodation Guide
 
 Wanderlust is a full-stack web application that allows users to browse, list, and review vacation rental properties. Built with a robust MVC (Model-View-Controller) architecture, it ensures a clean separation of concerns and scalable code.
 
