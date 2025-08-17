@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Review = require("./review.js");
-const { required } = require("joi");
 
+// Listing schema
 const listingSchema = new Schema({
     title: {
         type: String,
@@ -10,21 +10,21 @@ const listingSchema = new Schema({
     },
     description: String,
     image: {
-        url : String,
-        filename : String,
+        url: String,
+        filename: String,
     },
     price: Number,
     location: String,
     country: String,
-    reviews : [
+    reviews: [
         {
-            type : Schema.Types.ObjectId,
-            ref : "Review",
+            type: Schema.Types.ObjectId,
+            ref: "Review",
         },
     ],
-    owner : {
-        type : Schema.Types.ObjectId,
-        ref : "User",
+    owner: {
+        type: Schema.Types.ObjectId,
+        ref: "User",
     },
     geometry: {
         type: {
@@ -41,12 +41,13 @@ const listingSchema = new Schema({
     },
 });
 
+// Delete reviews when a listing is deleted
 listingSchema.post("findOneAndDelete", async (listing) => {
     if (listing) {
         await Review.deleteMany({ _id: { $in: listing.reviews } });
     }
 });
 
+// Export model
 const Listing = mongoose.model("Listing", listingSchema);
-
 module.exports = Listing;

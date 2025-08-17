@@ -1,6 +1,17 @@
-if(process.env.NODE_ENV != "production"){
-    require("dotenv").config();
-}
+
+const { cleanEnv, str, port } = require('envalid');
+require("dotenv").config();
+
+const env = cleanEnv(process.env, {
+    CLOUD_NAME: str(),
+    CLOUD_API_KEY: str(),
+    CLOUD_API_SECRET: str(),
+    MAP_TOKEN: str(),
+    MONGO_URL: str({ default: "mongodb://127.0.0.1:27017/airbnb" }),
+    SESSION_SECRET: str({ default: "mysupersecretcode" }),
+    PORT: port({ default: 8080 }),
+});
+
 
 const express = require("express");
 const app = express();
@@ -27,8 +38,16 @@ async function main() {
     await mongoose.connect(dbUrl);
 }
 main()
-    .then(() => console.log("Database is connected"))
+    .then(() => console.log("Database connection successful."))
     .catch(err => console.log(err));
+
+// UPDATED: More robust database connection logic
+const db = mongoose.connection;
+db.on("error", console.error.bind(console, "MongoDB connection error:"));
+db.on('disconnected', () => {
+    console.log('Mongoose disconnected');
+});
+
 
 // View engine & middleware
 app.set("view engine", 'ejs');
@@ -106,6 +125,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(8080, () => {
-    console.log("Server is turned on!!");
+app.listen(env.PORT, () => {
+    console.log(`Server is running on port ${env.PORT}`);
 });
