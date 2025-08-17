@@ -1,17 +1,4 @@
-
-const { cleanEnv, str, port } = require('envalid');
 require("dotenv").config();
-
-const env = cleanEnv(process.env, {
-    CLOUD_NAME: str(),
-    CLOUD_API_KEY: str(),
-    CLOUD_API_SECRET: str(),
-    MAP_TOKEN: str(),
-    MONGO_URL: str({ default: "mongodb://127.0.0.1:27017/airbnb" }),
-    SESSION_SECRET: str({ default: "mysupersecretcode" }),
-    PORT: port({ default: 8080 }),
-});
-
 
 const express = require("express");
 const app = express();
@@ -125,6 +112,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-app.listen(env.PORT, () => {
-    console.log(`Server is running on port ${env.PORT}`);
+app.listen(8080, () => {
+    console.log(`Server is running on port 8080`);
 });
