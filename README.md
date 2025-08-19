@@ -1,113 +1,98 @@
-# 🌍 Wanderlust Booking App
-A full-stack vacation rental web application built with **Node.js**, **Express**, and **MongoDB**, inspired by platforms like Airbnb.  
-Users can browse, review, and share unique places to stay.
+# Wanderlust - A Full-Stack Accommodation Guide
+
+Wanderlust is a full-stack web application that allows users to browse, list, and review vacation rental properties. Built with a robust MVC (Model-View-Controller) architecture, it ensures a clean separation of concerns and scalable code.
+
+**Live Demo**: [https://wanderlust-hotels-app.onrender.com](https://wanderlust-hotels-app.onrender.com)
+
+**GitHub Repository**: [https://github.com/MouryaRaviKumar/wanderlust-hotels-app](https://github.com/MouryaRaviKumar/wanderlust-hotels-app)
 
 ---
 
-## 📌 Table of Contents
-- [📜 Project Overview](#-project-overview)
-- [✨ Features](#-features)
-- [🛠 Tech Stack](#-tech-stack)
-- [🚀 Getting Started](#-getting-started)
-- [📂 Project Structure](#-project-structure)
-- [📌 Project Status](#-project-status)
-- [📬 Contact](#-contact)
+## Collaborators
+
+This project was a collaborative effort. Special thanks to:
+
+* **Hemanth Jangam** - [GitHub Profile](https://github.com/hemanthjangam)
+    * Hemanth played a crucial role by handling the frontend development and the complete testing process for the application. He was a great support throughout the project.
 
 ---
 
-## 📜 Project Overview
-Wanderlust is a dynamic and responsive web platform where users can browse a wide variety of property listings. The application follows the MVC (Model-View-Controller) architecture and is built from the ground up, featuring RESTful routing and a clean, modern user interface.
+## Key Features ✨
+
+* **MVC Architecture**: The project follows the Model-View-Controller design pattern, separating application logic, data, and UI for maintainability.
+* **Full CRUD Functionality**: Authenticated users can create, read, update, and delete their own property listings.
+* **User Authentication**: Secure signup, login, and logout functionality using Passport.js.
+* **Image Uploads**: Property images are uploaded to and served from Cloudinary.
+* **Interactive Maps**: Each property's location is displayed on an interactive map using the Mapbox API.
+* **Reviews and Ratings**: Users can leave text-based reviews and star ratings for properties.
+* **Custom Error Handling**: Implements a custom `ExpressError` class for consistent and clear error management throughout the backend.
 
 ---
 
-## ✨ Features
+## Validation 🛡️
 
-### Implemented Features
-- **Browse Listings:** View all available properties on a clean, responsive grid.  
-- **View Listing Details:** Click on any property to see more details, including description, price, and location.  
-- **Create Listings:** Add new properties to the platform through a simple and intuitive form.  
-- **Edit Listings:** Update the information for any existing property.  
-- **Delete Listings:** Remove properties from the database.  
-- **Review System:** Users can add, edit, and delete reviews for listings.  
-- **Sessions & Cookies:** Persistent interaction data using `express-session` and cookies.  
-- **Flash Messages:** Instant feedback for actions using `connect-flash`.  
-- **Error Handling:** Centralized handling with a custom `ExpressError` class.  
-- **EJS-Mate Templates:** DRY and reusable layouts for consistent UI.  
-- **Modular Express Router:** Clean separation of routes for scalability.  
-- **Client-side Validation:** Prevent invalid inputs before submission for better UX.  
-- **Schema Validation:** Robust server-side validation (e.g., Joi/Mongoose) to ensure data integrity.  
+The application implements robust validation on both the client and server sides to ensure data integrity.
 
-### Upcoming Features
-- **User Authentication:** Secure user sign-up and login functionality.  
-- **Authorization & Permissions:** Ensure users can only edit or delete their own listings.  
-- **Image Uploads:** Store user-uploaded images in the cloud.  
-- **Advanced Validation:** Additional safeguards and constraints on input data.
+* **Client-Side Validation**: Uses Bootstrap's built-in form validation to provide immediate feedback to users, preventing invalid form submissions.
+* **Server-Side Validation**: Middleware validates incoming data against predefined schemas before it reaches the route handlers, preventing invalid or malicious data from being processed.
 
 ---
 
-## 🛠 Tech Stack
-![Node.js](https://img.shields.io/badge/Node.js-43853D?logo=node.js&logoColor=white)
-![Express.js](https://img.shields.io/badge/Express.js-000000?logo=express&logoColor=white)
-![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)
-![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?logo=bootstrap&logoColor=white)
-![EJS](https://img.shields.io/badge/EJS-8C8C8C?logo=javascript&logoColor=white)
+## Technical Stack 🛠️
 
-**Backend:** Node.js, Express.js  
-**Frontend:** HTML, CSS, JavaScript, EJS  
-**Database:** MongoDB + Mongoose ODM  
-**Styling:** Bootstrap 5  
-**Templating:** EJS-Mate  
-**Utilities:** Method-Override, Connect-Flash, Express-Session
+* **Backend**: Node.js, Express.js
+* **Database**: MongoDB with Mongoose ODM
+* **Authentication**: Passport.js (Local Strategy)
+* **Image Hosting**: Cloudinary with Multer
+* **Mapping**: Mapbox API
+* **Frontend**: EJS (Embedded JavaScript templates)
+* **Styling**: Bootstrap, Custom CSS
 
 ---
 
-## 🚀 Getting Started
+## Getting Started 🚀
 
 ### Prerequisites
-- [Node.js](https://nodejs.org/en/)
-- [npm](https://www.npmjs.com/)
-- [MongoDB](https://www.mongodb.com/try/download/community)
 
-### Installation
-```bash
-# 1️⃣ Clone the repository
-git clone https://github.com/your-username/wanderlust-booking-app.git
+* Node.js and npm
+* MongoDB Atlas account
+* Cloudinary account
+* Mapbox account
 
-# 2️⃣ Navigate to the project directory
-cd wanderlust-booking-app
+### Installation and Setup
 
-# 3️⃣ Install dependencies
-npm install
+1.  **Clone the repository:**
+    ```bash
+    git clone [https://github.com/MouryaRaviKumar/wanderlust-hotels-app.git](https://github.com/MouryaRaviKumar/wanderlust-hotels-app.git)
+    cd wanderlust-hotels-app
+    ```
 
-# 4️⃣ Start your MongoDB server (in another terminal if needed)
+2.  **Install dependencies:**
+    ```bash
+    npm install
+    ```
 
-# 5️⃣ Run the application
-node app.js
+3.  **Set up environment variables:**
+    Create a `.env` file in the root directory and add the following, replacing the placeholder values with your own credentials:
+    ```env
+    CLOUD_NAME=<your_cloudinary_cloud_name>
+    CLOUD_API_KEY=<your_cloudinary_api_key>
+    CLOUD_API_SECRET=<your_cloudinary_api_secret>
+    MAP_TOKEN=<your_mapbox_api_token>
+    ATLASDB_URL=<your_mongodb_atlas_connection_string>
+    ```
 
-
----
-
-## 📂 File Structure
-
-project-root/  
-├── models/  
-│   ├── listing.js  
-│   └── review.js  
-├── routes/  
-│   ├── listings.js  
-│   └── reviews.js  
-├── utils/  
-│   ├── ExpressError.js  
-│   └── wrapAsync.js  
-├── views/  
-│   ├── listings/  
-│   ├── reviews/  
-│   └── layouts/  
-├── public/  
-│   ├── css/  
-│   └── js/  
-├── schema.js  
-├── app.js  
-└── package.json  
+4.  **Start the server:**
+    ```bash
+    node app.js
+    ```
+    The application will be running at `http://localhost:8080`.
 
 ---
+
+## Contact
+
+For any questions or feedback, please reach out!
+
+* **Name**: Mourya Ravi Kumar
+* **GitHub**: [MouryaRaviKumar](https://github.com/MouryaRaviKumar)
