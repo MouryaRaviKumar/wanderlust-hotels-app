@@ -1,24 +1,8 @@
-<% layout("/layouts/boilerplate") %>
+<%- layout("/layouts/boilerplate") %>
 
 <div class="row mt-3">
-    <div class="offset-3 col-8">
-        <% if (error && error.length) { %>
-            <% error.forEach(msg => { %>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <%= msg %>
-                    <button 
-                        type="button" 
-                        class="btn-close" 
-                        data-bs-dismiss="alert" 
-                        aria-label="Close"
-                    ></button>
-                </div>
-            <% }) %>
-        <% } %>
-    </div>
-
-    <h1 class="col-8 offset-3">SignUp on Wanderlust</h1>
-    <div class="col-8 offset-3">
+    <div class="offset-3 col-6">
+        <h1>SignUp on Wanderlust</h1>
         <form action="/signup" method="POST" novalidate class="needs-validation">
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
@@ -28,17 +12,19 @@
                     class="form-control" 
                     required
                 />
-                <div class="valid-feedback">Looks good!!</div>
+                <div class="valid-feedback">Looks good!</div>
             </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input name="email"
                     id="email"
-                    type="text"  
+                    type="email"  
                     class="form-control" 
                     required
                 />
             </div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input name="password"
@@ -46,9 +32,89 @@
                     type="password"  
                     class="form-control" 
                     required
+                    pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*]).{8,}"
+                    title="Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character."
                 />
+                <div class="invalid-feedback">
+                    Please enter a valid password.
+                </div>
             </div>
+
+            <div id="password-rules" class="mb-3 p-3 border rounded bg-light">
+                <p class="mb-1">Your password must contain:</p>
+                <ul class="list-unstyled mb-0">
+                    <li id="length" class="invalid">At least 8 characters</li>
+                    <li id="lowercase" class="invalid">A mix of lowercase letters (a-z)</li>
+                    <li id="uppercase" class="invalid">A mix of uppercase letters (A-Z)</li>
+                    <li id="number" class="invalid">At least one number (0-9)</li>
+                    <li id="special" class="invalid">At least one special character (!, @, #, $, etc.)</li>
+                </ul>
+            </div>
+            
             <button class="btn btn-success">SignUp</button>
         </form>
     </div>
 </div>
+
+<style>
+    #password-rules .valid {
+        color: green;
+    }
+    #password-rules .invalid {
+        color: red;
+    }
+    #password-rules .valid:before {
+        content: '✓ ';
+    }
+    #password-rules .invalid:before {
+        content: '✗ ';
+    }
+</style>
+
+<script>
+    const passwordInput = document.getElementById('password');
+    const lengthRule = document.getElementById('length');
+    const lowercaseRule = document.getElementById('lowercase');
+    const uppercaseRule = document.getElementById('uppercase');
+    const numberRule = document.getElementById('number');
+    const specialRule = document.getElementById('special');
+
+    passwordInput.addEventListener('keyup', () => {
+        const pass = passwordInput.value;
+
+        // Validate length
+        if (pass.length >= 8) {
+            lengthRule.classList.replace('invalid', 'valid');
+        } else {
+            lengthRule.classList.replace('valid', 'invalid');
+        }
+
+        // Validate lowercase
+        if (pass.match(/[a-z]/)) {
+            lowercaseRule.classList.replace('invalid', 'valid');
+        } else {
+            lowercaseRule.classList.replace('valid', 'invalid');
+        }
+
+        // Validate uppercase
+        if (pass.match(/[A-Z]/)) {
+            uppercaseRule.classList.replace('invalid', 'valid');
+        } else {
+            uppercaseRule.classList.replace('valid', 'invalid');
+        }
+
+        // Validate number
+        if (pass.match(/[0-9]/)) {
+            numberRule.classList.replace('invalid', 'valid');
+        } else {
+            numberRule.classList.replace('valid', 'invalid');
+        }
+
+        // Validate special character
+        if (pass.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/)) {
+            specialRule.classList.replace('invalid', 'valid');
+        } else {
+            specialRule.classList.replace('valid', 'invalid');
+        }
+    });
+</script>

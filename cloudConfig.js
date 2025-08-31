@@ -15,7 +15,12 @@ const storage = new CloudinaryStorage({
   params: {
     folder: 'wanderlust_DEV',
     allowedFormats : ["png","jpg","jpeg"],
-    public_id: (req, file) => 'computed-filename-using-request',
+    // FIX: Generate a unique filename using the current timestamp and original filename
+    public_id: (req, file) => {
+        // Removes file extension from original name
+        const originalNameWithoutExt = file.originalname.split('.').slice(0, -1).join('.');
+        return `${originalNameWithoutExt}-${Date.now()}`;
+    },
   },
 });
 
