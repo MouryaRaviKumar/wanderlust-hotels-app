@@ -1,0 +1,58 @@
+<%- layout("/layouts/boilerplate") %>
+
+<div class="container mt-4">
+<div class="row">
+<div class="col-12">
+<h1 class="mb-4">My Dashboard</h1>
+<p>Welcome back, <b><%= currUser.username %></b>! Here are your listings and their reviews.</p>
+</div>
+</div>
+<hr>
+
+<% if (listings && listings.length > 0) { %>
+    <% for (let listing of listings) { %>
+        <div class="card mb-4 shadow-sm">
+            <div class="row g-0">
+                <div class="col-md-4">
+                    <img src="<%= listing.image.url %>" class="img-fluid rounded-start" alt="<%= listing.title %>">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h4 class="card-title"><%= listing.title %></h4>
+                        <p class="card-text text-muted"><%= listing.location %>, <%= listing.country %></p>
+                        
+                        <!-- Action Buttons -->
+                        <div class="mb-3">
+                            <a href="/listings/<%= listing._id %>/edit" class="btn btn-dark btn-sm">Edit Listing</a>
+                            <a href="/listings/<%= listing._id %>" class="btn btn-outline-dark btn-sm">View Listing</a>
+                        </div>
+
+                        <h5 class="mt-4">Reviews for this Listing</h5>
+                        <hr>
+                        <% if (listing.reviews && listing.reviews.length > 0) { %>
+                            <div class="row">
+                                <% for (let review of listing.reviews) { %>
+                                    <div class="col-12 mb-3">
+                                        <div class="review-card border rounded p-3">
+                                            <strong>@<%= review.author.username %></strong>
+                                            <p class="starability-result mt-1" data-rating="<%= review.rating %>"></p>
+                                            <p class="mb-0"><%= review.comment %></p>
+                                        </div>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% } else { %>
+                            <p><i>No reviews have been left for this listing yet.</i></p>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <% } %>
+<% } else { %>
+    <div class="col-12">
+        <p>You haven't created any listings yet. <a href="/listings/new">Create one now</a> to get started!</p>
+    </div>
+<% } %>
+
+</div>

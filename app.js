@@ -13,6 +13,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
+const Listing = require("./models/listing.js"); // ** NEW ** Import Listing model
 
 const listingsRouter = require("./routes/listingRouter.js");
 const reviewsRouter = require("./routes/reviewRouter.js");
@@ -28,13 +29,11 @@ main()
     .then(() => console.log("Database connection successful."))
     .catch(err => console.log(err));
 
-// UPDATED: More robust database connection logic
 const db = mongoose.connection;
 db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.on('disconnected', () => {
     console.log('Mongoose disconnected');
 });
-
 
 // View engine & middleware
 app.set("view engine", 'ejs');
@@ -56,7 +55,7 @@ store.on("error",()=>{
     console.log("error in mongo session",err);
 });
 
-// Session settings 
+// Session settings
 const sessionOptions = {
     store : store,
     secret : "mysupersecretcode",
@@ -74,7 +73,7 @@ app.get("/", (req, res) => {
     res.redirect("/listings");
 });
 
-// Session and flash middleware  
+// Session and flash middleware
 app.use(session(sessionOptions));
 app.use(flash());
 
@@ -82,17 +81,26 @@ app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
-//Static Serialize and Deserialize for passport session support
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// Middleware to Flash Messages available in all views
-app.use((req,res,next)=>{
+// ** UPDATED ** Middleware to check for listings and set locals
+app.use(async (req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
+
+    // Check if a user is logged in and if they have listings
+    if (req.user) {
+        const userListings = await Listing.findOne({ owner: req.user._id });
+        res.locals.userHasListings = !!userListings; // Sets to true if userListings is not null, otherwise false
+    } else {
+        res.locals.userHasListings = false;
+    }
+
     next();
-})
+});
+
 
 //Routers for Listings and Reviews
 app.use("/listings", listingsRouter);
@@ -115,3 +123,4 @@ app.use((err, req, res, next) => {
 app.listen(8080, () => {
     console.log(`Server is running on port 8080`);
 });
+
